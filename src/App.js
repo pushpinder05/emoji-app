@@ -1,18 +1,62 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-export default function App() {
-  const [likeCounter, setLikeCounter] = useState(0);
+const emojiDictionary = {
+  "😁": "Beaming Face with Smiling Eyes",
+  "🙂": "Slightly Smiling Face",
+  "🤩": "Star-Struck",
+  "🤗": "Hugging Face",
+  "🤔": "Thinking Face",
+  "🤢": "Nauseated Face",
+  "😵": "Dizzy Face",
+  "🥱": "Yawning Face",
+  "👾": "Alien Monster",
+  "🖖": "Vulcan Salute",
+  "👏": "Clapping Hands"
+};
 
-  function likeClickHandler() {
-    var newLikeCounter = likeCounter + 1;
-    setLikeCounter(newLikeCounter);
+var emojisWeKnow = Object.keys(emojiDictionary);
+
+export default function App() {
+  const [meaning, setMeaning] = useState("");
+
+  function emojiInputHandler(event) {
+    var userInput = event.target.value;
+
+    var meaning = emojiDictionary[userInput];
+
+    if (meaning === undefined) {
+      meaning = "We don't have this in our database.";
+    }
+
+    setMeaning(meaning);
+  }
+
+  function emojiClickHandler(emoji) {
+    var meaning = emojiDictionary[emoji];
+    setMeaning(meaning);
   }
 
   return (
     <div className="App">
-      <h1>inside out!!!</h1>
-      <button onClick={likeClickHandler}> Like Me! </button> {likeCounter}
+      <h1>emoji identifier!!!</h1>
+
+      <input onChange={emojiInputHandler} />
+
+      <h2> {meaning} </h2>
+
+      <h3>emojis we know</h3>
+      {emojisWeKnow.map(function (emoji) {
+        return (
+          <span
+            onClick={() => emojiClickHandler(emoji)}
+            style={{ fontSize: "2rem", padding: "0.5rem", cursor: "pointer" }}
+            key={emoji}
+          >
+            {emoji}
+          </span>
+        );
+      })}
     </div>
   );
 }
