@@ -1,11 +1,18 @@
+import React, { useState } from "react";
 import "./styles.css";
 
-var userName = prompt("Give me you username!");
-
 export default function App() {
+  const [likeCounter, setLikeCounter] = useState(0);
+
+  function likeClickHandler() {
+    var newLikeCounter = likeCounter + 1;
+    setLikeCounter(newLikeCounter);
+  }
+
   return (
     <div className="App">
-      <h1 style={{ backgroundColor: "blue" }}>Welcome {userName}</h1>
+      <h1>inside out!!!</h1>
+      <button onClick={likeClickHandler}> Like Me! </button> {likeCounter}
     </div>
   );
 }
